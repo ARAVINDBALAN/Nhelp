@@ -15,13 +15,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_('first name'), max_length=30, blank=False)
     last_name = models.CharField(_('last name'), max_length=30, blank=False)
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
-    is_active = models.BooleanField(_('active'), default=False)
-    is_staff = models.BooleanField(_('staff status'),default=True)
+    is_active = models.BooleanField(_('active'), default=True)
+    is_staff = models.BooleanField(_('staff status'),default=False)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     phone_no = models.CharField(max_length=20,blank=True,null=True)
     served = models.IntegerField(blank=True,null=True)
     is_also_volunteer = models.BooleanField(blank=True,null=True)
     requested = models.IntegerField(blank=True,null=True)
+    pincode = models.CharField(_('Pincode'),max_length=6,blank=True)
+    address = models.CharField(_('Address'),max_length=200,blank=True)
     objects = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -59,17 +61,28 @@ class post(models.Model):
     datesub = models.DateTimeField(_('date published'),auto_now_add=True)
     claims = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='getclaims',blank=True)
     reports = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='getreports',blank=True)
+    volunteers = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='assignvolunteer',blank=True)
     timelimit = models.DateTimeField()
     def __str__(self):
         return self.title
 
     @property
+    def get_volunteer(self):
+        return self.volunteers.all()
+    @property
     def get_claims(self):
-        return self.claims.count()
+        return self.claims.all()
     @property
     def get_reports(self):
-        return self.reports.count()    
+        return self.reports.all()    
 
 #script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKzjwtu-tyyJQtPP3rFPxPRCgtZHgmKfs&callback=initMap"
  # type="text/javascript"></script>
 
+class contact(models.Model):
+    name = models.CharField(max_length=50,blank=False)
+    email = models.CharField(max_length=50,blank=False)
+    message = models.TextField(max_length=200)
+
+    def __str__(self):
+        return self.email + "_ " + self.name

@@ -20,8 +20,12 @@ urlpatterns = [
     path('home/',home,name='home'),
     path('signup/',signup,name='signup'),
     path('viewpost/',viewpost,name='viewpost'),
+    path('bevolunteer',bevolunteer,name='bevolunteer'),
     path('createpost/',createpost,name='createpost'),
     path('like/<int:user_id>/<int:id>',getclaims,name='getclaims'),
-    path('report/<int:user_id>/<int:id>',getreport,name='getreport'),
+    path('report/<int:user_id>/<int:id>',getreport,name='getreports'),
+    path('myposts/',mypost,name='mypost'),
+    path('contact/',contactus,name='contact'),
     path('editprofile/',editprofile,name='editprofile'),
+    path('assignvolunteers/<int:user_id>/<int:id>',assignvoluteer,name='assignvolunteer'),
 ]

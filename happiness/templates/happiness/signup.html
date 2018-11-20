@@ -1,400 +1,228 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Login - Happiness</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
-    <meta author="">
-    <link rel="icon" href="img/logo.png">
-    <meta property="og:type" content="website">
-    <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-        @import "@material/textfield/mdc-text-field";
-@import url(https://fonts.googleapis.com/css?family=Gudea:400,700);
+<html lang="en">
+    <head> 
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-#LoginContent 
-{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    background: linear-gradient(45deg, #35394a 0%, #1f222e 100%);
-    justify-content: center;
+        <style>
+        /*
+/* Created by Filipe Pina
+ * Specific styles of signin, register, component
+ */
+/*
+ * General styles
+ */
+#playground-container {
+    height: 500px;
+    overflow: hidden !important;
+    -webkit-overflow-scrolling: touch;
 }
-#LoginContent content 
-{
-    width: 100%;
-    height: 100%;
-    opacity: 0.3;
-    background-image: url(http://creativeit.io/material-dashboard-lite/images/Dark_background_1920x1080.png); 
-}
- 
-#LoginContent form img 
-{
-    max-width: 5.5em; 
-}
-#LoginContent form h2 
-{
-    font-family: Roboto;
-    margin-top: 1.5em;
-    font-size: 1.3em;
-    color: #dedede;
-    font-weight: 300; 
-}
-.inputContainer
-{
-    background: #2d303c;
-    width: 30em;
-    margin-left: 0em;
-    height: 3em;
-    display: flex;
-    align-items: center;
-    margin-top: 5em;
-    border-top: 2px solid #393d52;
-    border-bottom: 2px solid #393d52;
-    position: relative
-}
-.inputContainer img
-{
-    position: absolute;
-    left: 1.1em;
-    opacity: .5;
-    transition: .3s ease-out;
-}
-.inputContainer input
-{
-    background: none;
-    border: none;
-    margin-left: 4em;
-    color: #afb1be;
-    height: 100%;
-    width: 27em;
-}
-.second
-{
-    margin-top: 1em;
-}
-input:focus
-{
-    outline: none;
-}
-.inputContainer:focus .icon
-{
-    opacity: 1;
-}     
-body 
-{
-    -webkit-perspective: 800px;
-            perspective: 800px;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
-    font-family: 'Gudea', sans-serif;
-    /* Old browsers */
-    /* FF3.6+ */
-    /* Chrome,Safari4+ */
-    /* Chrome10+,Safari5.1+ */
-    /* Opera 11.10+ */
-    /* IE10+ */
-    /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EA5C54 ', endColorstr='#bb6dec',GradientType=1 );
-    /* IE6-9 fallback on horizontal gradient */
-}
-body ::-webkit-input-placeholder 
-{
-    color: #4E546D;
-}
-body .authent 
-{
-    display: none;
-    background: #35394a;
-    /* Old browsers */
-    /* FF3.6+ */
-    /* Chrome,Safari4+ */
-    /* Chrome10+,Safari5.1+ */
-    /* Opera 11.10+ */
-    /* IE10+ */
-    background: linear-gradient(45deg, #35394a 0%, #1f222e 100%);
-    /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#35394a', endColorstr='#1f222e',GradientType=1 );
-    /* IE6-9 fallback on horizontal gradient */
-    position: absolute;
-    left: 0;
-    right: 90px;
-    margin: auto;
-    width: 10em;
-    color: white;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-align: center;
-    padding: 20px 70px;
-    top: 200px;
-    bottom: 0;
-    height: 15em;
-    opacity: 0;
-}
-.logo
-{
-    position: absolute;
-    top: 3%;
-    max-width: 8%;
-    left: 4%
-}
-.logoAutenticacao
-{
-    max-width: 49%;
-    margin-right: 3em;
-    margin-left: 2.5em;
-    margin-top: 1em;
-    margin-bottom: 2em;
-        
-}
-body .authent p {
-    text-align: center;
-    color: white;
-}
-body .feedback {
-    display: none;
-    color: #d5d8e2;
-}
-body .feedback p {
-    font-size: 14px;
-}
-body p {
-    color: #5B5E6F;
-    font-size: .7em;
-    text-align: left;
-}
-body .testtwo {
-    left: -320px !important;
-}
-body .test 
-{
-    box-shadow: 0px 20px 30px 3px rgba(0, 0, 0, 0.55);
-    pointer-events: none;
-    top: -100px !important;
-    -webkit-transform: rotateX(70deg) scale(0.8) !important;
-    transform: rotateX(70deg) scale(0.8) !important;
-    opacity: .6 !important;
-    -webkit-filter: blur(1px);
-    filter: blur(1px);
-}
-body .login 
-{
-    opacity: 1;
-    top: 20px;
-    -webkit-transition-timing-function: cubic-bezier(0.68, -0.25, 0.265, 0.85);
-    transition-property: opacity,box-shadow,top,left,-webkit-transform;
-    transition-property: transform,opacity,box-shadow,top,left;
-    transition-property: transform,opacity,box-shadow,top,left,-webkit-transform;
-    transition-duration: .5s;
-    -webkit-transform-origin: 161px 100%;
-    transform-origin: 161px 100%;
-    -webkit-transform: rotateX(0deg);
-    transform: rotateX(0deg);
-    position: relative;
-    width: 22em;
-    border-top: 2px solid #0097af;
-    height: 29em;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    padding: 38px 40px 40px 40px;
-    background: #35394a;
-    /* Old browsers */
-    /* FF3.6+ */
-    /* Chrome,Safari4+ */
-    /* Chrome10+,Safari5.1+ */
-    /* Opera 11.10+ */
-    /* IE10+ */
-    background: linear-gradient(45deg, #35394a 0%, #1f222e 100%);
-    /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#35394a', endColorstr='#1f222e',GradientType=1 );
-    /* IE6-9 fallback on horizontal gradient */
-}
-.login h3
-{
-    color: #a4a6b3;
-    font-weight: 500;
-    font-size: 1.4em;
-    margin-bottom: .31em;
-}
-.SaavHeader p
-{
-    font-size: .8em;
-    margin-bottom: 4em;
+body, html{
+     height: 100%;
+ 	background-repeat: no-repeat;
+ 	background: linear-gradient(45deg, #35394a 0%, #1f222e 100%);
+ 	font-family: 'Oxygen', sans-serif;
+	    background-size: cover;
 }
 
-body .login .validation {
-    position: absolute;
-    z-index: 1;
-    right: 10px;
-    top: 15px;
-    opacity: 0;
+.main{
+ 	margin:50px 15px;
 }
 
-body .login .disclaimer {
-    position: absolute;
-    bottom: 20px;
-    left: 35px;
-    width: 250px;
+h1.title { 
+	font-size: 50px;
+	font-family: 'Passion One', cursive; 
+	font-weight: 400; 
 }
-body .login_title {
-    color: #afb1be;
-    height: 60px;
-    text-align: left;
-    font-size: 16px;
+
+hr{
+	width: 10%;
+	color: #fff;
 }
-body .login_fields {
-    height: 208px;
-    position: absolute;
-    left: 0;
-    width: 100%;
+
+.form-group{
+	margin-bottom: 15px;
 }
-body .login_fields .icon {
-    position: absolute;
-    z-index: 1;
-    left: 36px;
-    top: 15px;
-    opacity: .5;
+
+label{
+	margin-bottom: 15px;
 }
-body .login_fields input[type='password'] {
-    color: #0097af !important;
-}
-body .login_fields input[type='text'], body .login_fields input[type='password'] {
-    color: #afb1be;
-    width: 70%;
-    margin-top: -2px;
-    background: #32364a;
-    left: 0;
-    padding: 10px 65px;
-    border-top: 2px solid #393d52;
-    border-bottom: 2px solid #393d52;
-    border-right: none;
-    border-left: none;
-    outline: none;
-    font-family: 'Gudea', sans-serif;
-    box-shadow: none;
-    height: 2em;
-}
-body .login_fields__user, body .login_fields__password {
-    position: relative;
-}
-body .login_fields__submit {
-    position: relative;
-    top: 35px;
-    left: 0;
-    width: 80%;
-    right: 0;
-    margin: auto;
-}
-body .login_fields__submit .forgot {
-    float: right;
-    font-size: 10px;
-    margin-top: 11px;
-    text-decoration: underline;
-}
-body .login_fields__submit .forgot a {
-    color: #606479;
-    font-size: 1.2em;
-}
-body .login_fields__submit input {
-    border-radius: 50px;
-    background: transparent;
-    padding: 10px 50px;
-    border: 2px solid #0097af;
-    color: #0097af;
-    text-transform: uppercase;
+
+input,
+input::-webkit-input-placeholder {
     font-size: 11px;
-    transition-property: background,color;
-    transition-duration: .2s;
+    padding-top: 3px;
 }
-body .login_fields__submit input:focus {
-    box-shadow: none;
-    outline: none;
+
+.main-login{
+ 	background-color: #fff;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
 }
-body .login_fields__submit input:hover {
-    color: white;
-    background: #0097af;
+.form-control {
+    height: auto!important;
+padding: 8px 12px !important;
+}
+.input-group {
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+}
+#button {
+    border: 1px solid #ccc;
+    margin-top: 28px;
+    padding: 6px 12px;
+    color: #666;
+    text-shadow: 0 1px #fff;
     cursor: pointer;
-    transition-property: background,color;
-    transition-duration: .2s;
+    -moz-border-radius: 3px 3px;
+    -webkit-border-radius: 3px 3px;
+    border-radius: 3px 3px;
+    -moz-box-shadow: 0 1px #fff inset, 0 1px #ddd;
+    -webkit-box-shadow: 0 1px #fff inset, 0 1px #ddd;
+    box-shadow: 0 1px #fff inset, 0 1px #ddd;
+    background: #f5f5f5;
+    background: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5), color-stop(100%, #eeeeee));
+    background: -webkit-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+    background: -o-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+    background: -ms-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+    background: linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#eeeeee', GradientType=0);
+}
+.main-center{
+ 	margin-top: 30px;
+ 	margin: 0 auto;
+ 	max-width: 400px;
+    padding: 10px 40px;
+	background: linear-gradient(45deg, #35394a 0%, #1f222e 100%);
+	    color: #FFF;
+    text-shadow: none;
+	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+
+}
+span.input-group-addon i {
+    color: #009edf;
+    font-size: 17px;
 }
 
-/* Color Schemes */
-.feedback h2
-{
-    margin-bottom: 1em;
+.login-button{
+	margin-top: 5px;
 }
-.love {
-    position: absolute;
-    right: 20px;
-    bottom: 0px;
-    font-size: 11px;
-    font-weight: normal;
+
+.login-register{
+	font-size: 11px;
+	text-align: center;
 }
-.love p {
-    color: white;
-    font-weight: normal;
-    font-family: 'Open Sans', sans-serif;
-}
-.love a {
-    color: white;
-    font-weight: 700;
-    text-decoration: none;
-}
-.love img {
-    position: relative;
-    top: 3px;
-    margin: 0px 4px;
-    width: 10px;
-}
-.brand {
-    position: absolute;
-    left: 20px;
-    bottom: 14px;
-}
-.brand img {
-    width: 30px;
-}
+</style>
         
-.dribbble
-{
-    position: absolute;
-    right: 3%;
-    top: 4%;
-    text-decoration: none;
-    color: #fff;
-    display: flex;
-    align-items: center;
-}
-.dribbble img
-{
-    max-width: 1.5em;
-    margin-right: .6em;
-}
-    </style>
-</head>
-<body>
-    
-    <section id='LoginContent'>
-        <form id="login_form" method='POST' enctype="application/x-www-form-urlencoded">
-            {% csrf_token %}
-            {{signupform.as_p}}
-            <input type="submit">
-    </form>
-    <div class='authent'>
-        <img src="https://image.ibb.co/mco6FL/logo-mini.png" class='logoAutenticacao'>
-        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/puff.svg'>
-        <p>Autenticando...</p>
-    </div>
-    
-</section>
-</body>
-</html>
+		<!-- Website CSS style -->
+        
 
+		<!-- Website Font style -->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	
+		<!-- Google Fonts -->
+		<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+		<title>Admin</title>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row main">
+				<div class="main-login main-center">
+				<h5>Sign up once and watch any of our free demos.</h5>
+					<form class="" method="post" action="">
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="name" class="cols-sm-2 control-label">First name</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" name="first_name" maxlength="30" required id="id_name_first_name"  placeholder="Enter your Name"/>
+                                    
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="email" class="cols-sm-2 control-label">Your Email</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+									<input type="email" class="form-control" name="email" required id="id_email" maxlength="254"  placeholder="Enter your Email"/>
+                                
+                                </div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="username" class="cols-sm-2 control-label">Last name </label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+									<input type="text" class="form-control" name="last_name" id="id_last_name" maxlength="30" placeholder="Enter your last name"/>
+
+            
+                                </div>
+							</div>
+                        </div>
+
+                        <div class="form-group">
+							<label for="username" class="cols-sm-2 control-label">Phone </label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+									<input type="text" name="phone_no" class="form-control" maxlength="20" id="id_phone_no">
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="password" class="cols-sm-2 control-label">Password</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+									<input type="password" name="password1" placeholder="password" class="form-control" required id="id_password1">
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                    <input type="password" name="password2" placeholder="confirm password" required id="id_password2" class="form-control">
+                                </div>
+							</div>
+						</div>
+
+						<div class="form-group ">
+							<input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Register">
+						</div>
+						
+					</form>
+				</div>
+			</div>
+		</div>
+        
+		 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+	</body>
+</html>

@@ -398,7 +398,7 @@ body .login_fields__submit input:hover {
                         <div class='icon'>
                             <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/user_icon_copy.png'>
                         </div>
-                        <input placeholder='Email' name='username' type='text' id='UsuarioInput'>
+                        <input placeholder='Email' name='username' type='text' required id='id_username'>
                         <div class='validation'>
                             <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
                         </div>
@@ -408,7 +408,7 @@ body .login_fields__submit input:hover {
                     <div class='icon'>
                         <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/lock_icon_copy.png'>
                     </div>
-                    <input placeholder='Senha' name="password" id='SenhaInput' type='password'>
+                    <input placeholder='Senha' name="password" id='' type='password'>
                     <div class='validation'>
                         <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
                     </div>
@@ -422,6 +422,10 @@ body .login_fields__submit input:hover {
            
             <div class='disclaimer'>
                 <p>Take care of your password, do not inform it to anyone to avoid theft and fraud. All rights reserved to Happiness Project</p>
+                {% if form.errors %} 
+                {{form.errors}}
+                {% endif %}</p>
+                
             </div>
         </div>
     </form>
@@ -430,6 +434,9 @@ body .login_fields__submit input:hover {
         <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/puff.svg'>
         <p>Autenticando...</p>
     </div>
+
+
+    
     
 </section>
 </body>

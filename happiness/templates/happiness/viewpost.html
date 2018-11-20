@@ -1,13 +1,80 @@
 <html>
+    <head>
+            <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+            <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+            
+            
+            <script type="text/javascript" src="/nhelp/jsi18n/"></script>
+            <link href="/static/places/places.css" type="text/css" media="all" rel="stylesheet">
+            <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+            <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyBKzjwtu-tyyJQtPP3rFPxPRCgtZHgmKfs&amp;libraries=places"></script>
+            <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/geocomplete/1.7.0/jquery.geocomplete.js"></script>
+            <script type="text/javascript" src="/static/places/places.js"></script>
+            <script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
+            <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+            <script type="text/javascript" src="/static/admin/js/core.js"></script>
+            <script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+            <script type="text/javascript" src="/static/admin/js/actions.js"></script>
+            <script type="text/javascript" src="/static/admin/js/urlify.js"></script>
+            <script type="text/javascript" src="/static/admin/js/prepopulate.js"></script>
+            <script type="text/javascript" src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
+            <script type="text/javascript" src="/static/admin/js/calendar.js"></script>
+            <script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
+            
+            
+                <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+                <link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">
+                
+            
+            <meta name="robots" content="NONE,NOARCHIVE">
+    </head>
     {% for p in post%}
     {% if user.is_also_volunteer == True%}
-    hdajgajga
+    <a href = "{% url 'assignvolunteer' user_id=user.id id=p.id %}">assist  </a>{{p.volunteers.count}}
     {% endif %}
     {{p.title}}
     {{p.datesub}}
+    <a href = "{% url 'getreports' user_id=user.id id=p.id %}">report</a>
     <a href="{% url 'getclaims' user_id=user.id id=p.id  %}">claim</a>
     {{p.claims.count}}
     {{p.reports.count}}
-    {{p.message}}
-    {% endfor %}
+    {{p.message}}   
+    {{p.timelimit}}
+
+    <div class="form-row field-location">
+            
+            
+            <div>
+                
+                
+                    <label class="required" for="id_location_0">Location:</label>
+                    
+                        <div class="places-widget" data-map-options="" data-marker-options="">
+<input type="text" name="location_0" value="{{p.location.place}}" data-geo="formatted_address" data-id="map_place" class="places" required readonly id="id_location_0"><input readonly type="text" name="location_1" value="{{p.location.latitude}}" data-geo="lat" data-id="map_latitude" placeholder="Latitude" class="places" required id="id_location_1"><input type="text" readonly name="location_2" value="{{p.location.longitude}}" data-geo="lng" data-id="map_longitude" placeholder="Longitude" class="places" required id="id_location_2">
+
+ <center><div id="map_location" style="height:400px; width: 95%"></div></center>
+</div>
+                    
+                
+                
+            </div>
+        
+    </div>
+    {%endfor%}
+
+    <script type="text/javascript"
+            id="django-admin-form-add-constants"
+            src="/static/admin/js/change_form.js"
+            >
+    </script>
+
+
+
+
+<script type="text/javascript"
+        id="django-admin-prepopulated-fields-constants"
+        src="/static/admin/js/prepopulate_init.js"
+        data-prepopulated-fields="[]">
+</script>
+
 </html>

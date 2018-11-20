@@ -1,0 +1,9 @@
+<html>
+    {% for p in post %}
+    {{p}}   
+    {% for u in p.get_claims %}
+    {{u}}
+    {% endfor %}
+    {% endfor %}
+    
+</html>

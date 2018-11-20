@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from django.shortcuts import render
 from .models import * 
 from django.contrib import messages
@@ -14,9 +15,43 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages 
 
 def home(request):
-    pst = post.objects.all().order_by('datesub')
-    return render(request,'happiness/home.html',{'post':pst})
+    if request.method == "POST":
+        form = contactform(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Message has been notified')
+            return redirect('home')
+            
+    else :
+        form = contactform()
+    pst = post.objects.all().order_by('-datesub')
+    user = request.user   
+    
+    return render(request,'happiness/home.html',{'post':pst,'user':user,'form':form})
+@login_required
+def bevolunteer(request):
+    user = request.user
+    if user.is_also_volunteer == False or user.is_also_volunteer == None:
+        user.is_also_volunteer = True
+        user.save()
+        messages.success(request,'You Became a volunteer')
+    return redirect('home')    
 
+
+def contactus(request):
+    if request.method == "POST":
+        form = contactform(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else :
+        form = contactform()
+    return render(request,'happiness/home.html',{'form':form})    
+
+@login_required
+def mypost(request):
+    pst = post.objects.filter(author=request.user).order_by('-datesub')
+    return render(request,'happiness/myposts.html',{'post':pst})
 
 @login_required
 def createpost(request):
@@ -27,6 +62,7 @@ def createpost(request):
             post1.author = request.user
             post1.datesub = timezone.now()
             post1.save()
+            return redirect('home')
     else:
         postform = postcreate()
     return render(request,'happiness/posts.html',{'postform':postform})       
@@ -65,19 +101,19 @@ def getclaims(request,user_id,id):
 
 
 @login_required
-def getreport(request):
+def getreport(request,user_id,id):
     pst = post.objects.get(id=id)
     if pst.reports.filter(id=user_id).exists():
-        pst.reports.remove(user)
+        pst.reports.remove(request.user)
     else:
-        pst.reports.add(user)
-    Post = post.objects.all().order_by('-datesub')    
+        pst.reports.add(request.user)
+    Post = post.objects.all().order_by('-datesub')
     context = {'post': Post}
-    return render(request,'happiness/home.html',context=context) 
+    return render(request,'happiness/viewpost.html',context=context) 
     
-
+@login_required
 def viewpost(request):
-    p = post.objects.all().order_by('-datesub')[:3]
+    p = post.objects.all().order_by('-datesub')
     return render(request,'happiness/viewpost.html',{'post':p})
 
 
@@ -91,3 +127,13 @@ def editprofile(request):
     else :
         form = EditProfile()
     return render(request,'happiness/changeuser.html',{'form':form})
+
+def assignvoluteer(request,user_id,id):
+    pst = post.objects.get(id=id)
+    if pst.volunteers.filter(id=user_id).exists():
+        pst.volunteers.remove(request.user)
+    else:
+        pst.volunteers.add(request.user)
+    Post = post.objects.all().order_by('-datesub')    
+    context = {'post': Post}
+    return render(request,'happiness/viewpost.html',context=context)
