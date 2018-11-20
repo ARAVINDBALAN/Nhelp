@@ -1,0 +1,17 @@
+<html>
+    <form method="POST">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit">
+        {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <script>
+        alert('{{message}}');
+        location.href="{% url 'home'%}";
+    </script>
+    {% endfor %}
+</ul>
+{% endif %}
+    </form>
+</html>

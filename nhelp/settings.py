@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'happiness',
+    'places',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -109,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE =  'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -117,19 +119,23 @@ USE_L10N = True
 
 USE_TZ = True
 
+CRISPY_TEMPLATE_PACK = 'uni_form'
+LOGOUT_REDIRECT_URL = 'home'
+
+LOGIN_REDIRECT_URL = 'home'
+
 AUTH_USER_MODEL = 'happiness.User'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-PLACES_MAPS_API_KEY='AIzaSyAORYYMaGpcWUPC2Apw6nKxfIxVNegkMNg'
+PLACES_MAPS_API_KEY='AIzaSyBKzjwtu-tyyJQtPP3rFPxPRCgtZHgmKfs'
 MAP_WIDGET_HEIGHT=480
 MAP_OPTIONS={}
 MARKER_OPTIONS={}
-
-
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+

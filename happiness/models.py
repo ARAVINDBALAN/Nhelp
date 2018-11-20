@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
@@ -14,14 +15,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_('first name'), max_length=30, blank=False)
     last_name = models.CharField(_('last name'), max_length=30, blank=False)
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
-    is_active = models.BooleanField(_('active'), default=True)
+    is_active = models.BooleanField(_('active'), default=False)
     is_staff = models.BooleanField(_('staff status'),default=True)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     phone_no = models.CharField(max_length=20,blank=True,null=True)
     served = models.IntegerField(blank=True,null=True)
+    is_also_volunteer = models.BooleanField(blank=True,null=True)
     requested = models.IntegerField(blank=True,null=True)
     objects = UserManager()
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -47,10 +48,28 @@ class User(AbstractBaseUser, PermissionsMixin):
         Sends an email to this User.
         '''
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+
 class post(models.Model):
-    name = models.CharField(max_length=200,blank=False)
+    title = models.CharField(max_length=200,blank=False)
+    message = models.TextField()
     location = PlacesField()
-    author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=CASCADE)
-    datesub = models.DateField(auto_now_add=True)
-    claims = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='claims')
-    reports = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='reports')
+    active_post = models.BooleanField(null=True,default=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    datesub = models.DateTimeField(_('date published'),auto_now_add=True)
+    claims = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='getclaims',blank=True)
+    reports = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='getreports',blank=True)
+    timelimit = models.DateTimeField()
+    def __str__(self):
+        return self.title
+
+    @property
+    def get_claims(self):
+        return self.claims.count()
+    @property
+    def get_reports(self):
+        return self.reports.count()    
+
+#script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKzjwtu-tyyJQtPP3rFPxPRCgtZHgmKfs&callback=initMap"
+ # type="text/javascript"></script>
+

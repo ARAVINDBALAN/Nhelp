@@ -1,0 +1,75 @@
+<html>
+        <head>
+                <title>Change post | Django site admin</title>
+                <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+                <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+                
+                
+                <script type="text/javascript" src="/nhelp/jsi18n/"></script>
+                <link href="/static/places/places.css" type="text/css" media="all" rel="stylesheet">
+                <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+                <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyBKzjwtu-tyyJQtPP3rFPxPRCgtZHgmKfs&amp;libraries=places"></script>
+                <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/geocomplete/1.7.0/jquery.geocomplete.js"></script>
+                <script type="text/javascript" src="/static/places/places.js"></script>
+                <script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
+                <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+                <script type="text/javascript" src="/static/admin/js/core.js"></script>
+                <script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+                <script type="text/javascript" src="/static/admin/js/actions.js"></script>
+                <script type="text/javascript" src="/static/admin/js/urlify.js"></script>
+                <script type="text/javascript" src="/static/admin/js/prepopulate.js"></script>
+                <script type="text/javascript" src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
+                <script type="text/javascript" src="/static/admin/js/calendar.js"></script>
+                <script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
+                    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+                    <link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">                
+                <meta name="robots" content="NONE,NOARCHIVE">
+                </head>
+    <body>
+            shjdgjsgdkl
+            <form method="POST">
+                {%csrf_token%}
+                {{postform.title}}<br>
+                <div class="form-row field-timelimit">
+            
+            
+                        <div>
+                            
+                            
+                                <label class="required" for="id_timelimit_0">Timelimit:</label>
+                                
+                                    <p class="datetime">
+          Date: <input type="text" name="timelimit_0" value="" class="vDateField" size="10" required id="id_timelimit_0">
+        
+        <br>
+          Time: <input type="text" name="timelimit_1" value="" class="vTimeField" size="8" required id="id_timelimit_1">
+        
+        
+        </p>
+                                
+                            
+                            
+                        </div>
+                    
+                </div>
+                <input type='submit'>
+            </form>
+            <script type="text/javascript"
+            id="django-admin-form-add-constants"
+            src="/static/admin/js/change_form.js"
+            >
+    </script>
+
+
+
+
+<script type="text/javascript"
+        id="django-admin-prepopulated-fields-constants"
+        src="/static/admin/js/prepopulate_init.js"
+        data-prepopulated-fields="[]">
+</script>
+
+    </body>            
+   
+
+</html>

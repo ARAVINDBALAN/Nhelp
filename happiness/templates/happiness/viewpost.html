@@ -1,0 +1,13 @@
+<html>
+    {% for p in post%}
+    {% if user.is_also_volunteer == True%}
+    hdajgajga
+    {% endif %}
+    {{p.title}}
+    {{p.datesub}}
+    <a href="{% url 'getclaims' user_id=user.id id=p.id  %}">claim</a>
+    {{p.claims.count}}
+    {{p.reports.count}}
+    {{p.message}}
+    {% endfor %}
+</html>
