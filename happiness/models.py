@@ -19,11 +19,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(_('staff status'),default=False)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     phone_no = models.CharField(max_length=20,blank=True,null=True)
-    served = models.IntegerField(blank=True,null=True)
+    served = models.IntegerField(default=0)
     is_also_volunteer = models.BooleanField(blank=True,null=True)
-    requested = models.IntegerField(blank=True,null=True)
-    pincode = models.CharField(_('Pincode'),max_length=6,blank=True)
-    address = models.CharField(_('Address'),max_length=200,blank=True)
+    requested = models.IntegerField(default=0)
+    fulfilled = models.ManyToManyField('post',related_name='fulfilled',blank=True)
+    pincode = models.CharField(max_length=6,blank=True)
+    reported = models.ManyToManyField('post',related_name='reported',blank=True)
+    assisted = models.ManyToManyField('post',related_name='makeassisted',blank=True)
+    address = models.CharField(max_length=200,blank=True)
     objects = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -45,6 +48,17 @@ class User(AbstractBaseUser, PermissionsMixin):
         '''
         return self.first_name
 
+    @property
+    def get_volunteers(self):
+        return self.assisted
+    @property
+    def get_claims(self):
+        return self.requested
+    
+    @property
+    def get_served(self):
+        return self.served
+
     def email_user(self, subject, message, from_email=None, **kwargs):
         '''
         Sends an email to this User.
@@ -52,11 +66,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
 
+
 class post(models.Model):
     title = models.CharField(max_length=200,blank=False)
     message = models.TextField()
     location = PlacesField()
-    active_post = models.BooleanField(null=True,default=True)
+    active_post = models.BooleanField(default=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     datesub = models.DateTimeField(_('date published'),auto_now_add=True)
     claims = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='getclaims',blank=True)
@@ -75,7 +90,9 @@ class post(models.Model):
     @property
     def get_reports(self):
         return self.reports.all()    
-
+    @property
+    def is_act(self):
+        return self.active_post
 #script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKzjwtu-tyyJQtPP3rFPxPRCgtZHgmKfs&callback=initMap"
  # type="text/javascript"></script>
 

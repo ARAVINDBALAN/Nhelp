@@ -15,10 +15,10 @@
                 <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
                 <script type="text/javascript" src="/static/admin/js/core.js"></script>
                 <script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+                <script type="text/javascript" src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
                 <script type="text/javascript" src="/static/admin/js/urlify.js"></script>
                 <script type="text/javascript" src="/static/admin/js/prepopulate.js"></script>
                 <script type="text/javascript" src="/static/admin/js/actions.js"></script>
-                <script type="text/javascript" src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
                 <script type="text/javascript" src="/static/admin/js/calendar.js"></script>
                 <script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
                     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -27,25 +27,159 @@
                 </head>
     <body>
             
-            <form method="POST">
-                {%csrf_token%}
-             {{postform.as_p}}
-             <input type="submit">
-            </form>
-            <script type="text/javascript"
-            id="django-admin-form-add-constants"
-            src="/static/admin/js/change_form.js"
-            >
-    </script>
+            <body class=" app-happiness model-post change-form"
+            data-admin-utc-offset="19800">
+          
+          <!-- Container -->
+          <div id="container">
+          
+              
+              <!-- Header -->
+              <div id="header" style="background:#989898;">
+                  <div id="branding">
+                  
+          <h1 id="site-name"><a href="/nhelp/" style="color:#ffffff;">Add Post Here !</a></h1>
+          
+                  </div>
+                  
+                  
+                  <div id="user-tools">
+                      
+                          Welcome,
+                          <strong>{{user.first_name}}</strong>.
+                      
+                      
+                          
+                              <a href="{% url 'home'%}">Go Home</a> /
+                          
+                          
+                              
+                
+                      
+                  </div>
+                  
+                  
+                  
+              </div>
+              <!-- END Header -->
+        
+          
+              
+          
+              
+                  
+              
+          
+              <!-- Content -->
+              <div id="content" class="colM">
+                  
+                  
+                  <div id="content-main">
 
 
 
 
-<script type="text/javascript"
-        id="django-admin-prepopulated-fields-constants"
-        src="/static/admin/js/prepopulate_init.js"
-        data-prepopulated-fields="[]">
-</script>
+<form method="POST">
+        {%csrf_token%}
+        <fieldset class="module aligned ">
+    
+    
+    
+                        <div class="form-row field-title">
+                            
+                            
+                                <div>
+                                    
+                                    
+                                        <label class="required" for="id_title">Title:</label>
+                                        
+                                            <input type="text" name="title" class="vTextField" maxlength="200" required id="id_title">
+                                        
+                                    
+                                    
+                                </div>
+                            
+                        </div>
+                    
+                        <div class="form-row field-message">
+                            
+                            
+                                <div>
+                                    
+                                    
+                                        <label class="required" for="id_message">Message:</label>
+                                        
+                                            <textarea name="message" cols="40" rows="10" class="vLargeTextField" required id="id_message">
+                </textarea>
+                                        
+                                    
+                                    
+                                </div>
+                            
+                        </div>
+                    
+                        <div class="form-row field-location">
+                            
+                            
+                                <div>
+                                    
+                                    
+                                        <label class="required" for="id_location_0">Location:</label>
+                                        
+                                            <div class="places-widget" data-map-options="" data-marker-options="">
+                        <input type="text" name="location_0" data-geo="formatted_address" data-id="map_place" class="places" required id="id_location_0"><input type="text" name="location_1" data-geo="lat" data-id="map_latitude" placeholder="Latitude" class="places" required id="id_location_1"><input type="text" name="location_2" data-geo="lng" data-id="map_longitude" placeholder="Longitude" class="places" required id="id_location_2">
+                
+                          <div id="map_location" style="height:480px; width: 100%"></div>
+                </div>
+                                        
+                                    
+                                    
+                                </div>
+                            
+                        </div>
+                   
+                
+                        <div class="form-row field-timelimit">
+            
+            
+                                        <div>
+                                            
+                                            
+                                                <label class="required">Timelimit:</label>
+                                                
+                                                    <p class="datetime">
+                          Date: <input type="text" name="timelimit_0" class="vDateField" size="10" required id="id_timelimit_0">
+                        
+                        <br>
+                          Time: <input type="text" name="timelimit_1" class="vTimeField" size="8" required id="id_timelimit_1">
+                        
+                        
+                        </p>
+                                                
+                                            
+                                            
+                                        </div>
+                                    
+                                </div>
+                            
+        </fieldset>
+        <input type="submit">
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     </body>            
    

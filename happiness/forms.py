@@ -14,7 +14,7 @@ class postcreate(forms.ModelForm):
 class EditProfile(UserChangeForm):
     class Meta:
         model = User
-        fields = ('email','first_name','last_name','is_also_volunteer','avatar','phone_no','password')
+        fields = ('email','first_name','last_name','is_also_volunteer','avatar','phone_no','pincode','address','password')
 
 class contactform(forms.ModelForm):
     class Meta:

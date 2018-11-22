@@ -26,8 +26,8 @@ def home(request):
         form = contactform()
     pst = post.objects.all().order_by('-datesub')
     user = request.user   
-    
     return render(request,'happiness/home.html',{'post':pst,'user':user,'form':form})
+
 @login_required
 def bevolunteer(request):
     user = request.user
@@ -35,6 +35,10 @@ def bevolunteer(request):
         user.is_also_volunteer = True
         user.save()
         messages.success(request,'You Became a volunteer')
+    else :
+        user.is_also_volunteer = False
+        user.save()
+        messages.success(request,'You are not a volunteer anymore')    
     return redirect('home')    
 
 
@@ -48,6 +52,27 @@ def contactus(request):
         form = contactform()
     return render(request,'happiness/home.html',{'form':form})    
 
+
+@login_required
+def makeassited(request,user_id,post_id):
+    user = User.objects.get(id=user_id)
+    pst = post.objects.get(id=post_id)
+    if user.assisted.filter(id=post_id).exists():
+        user.assisted.remove(pst)
+    else:
+        user.assisted.add(pst)
+    Post = post.objects.all().order_by('-datesub')    
+    context = {'post': Post}
+    return redirect('mypost')    
+
+
+
+@login_required
+def profile(request):
+    user = request.user
+    pst = post.objects.filter(author=request.user).count()
+    return render(request,'happiness/profile.html',{'ser':user,'co1':pst})
+
 @login_required
 def mypost(request):
     pst = post.objects.filter(author=request.user).order_by('-datesub')
@@ -60,12 +85,67 @@ def createpost(request):
         if postform.is_valid():
             post1=postform.save(commit=False)
             post1.author = request.user
+            user = request.user
             post1.datesub = timezone.now()
             post1.save()
+            user.served +=1
+            user.save()
             return redirect('home')
     else:
         postform = postcreate()
     return render(request,'happiness/posts.html',{'postform':postform})       
+
+
+@login_required
+def activepost(request,p_id):
+    pst = post.objects.get(id=p_id)
+    print(pst)
+    if pst.active_post == True :
+        pst.active_post = False
+        pst.save()
+    else :
+        pst.active_post = True
+        pst.save()
+    return redirect('mypost')
+
+#from django.http import JsonResponse
+
+
+def ho(request,p_id):
+    pst = post.objects.get(id=p_id)
+    print(pst)
+    if pst.active_post == True :
+        pst.active_post = False
+        pst.save()
+    else :
+        pst.active_post = True
+        pst.save()
+    data = {'status':pst.active_post}
+    return JsonResponse(data)
+    
+
+
+@login_required()
+def viewprofile(request,user_id):
+    user = User.objects.get(id=user_id)
+    pst = post.objects.filter(author_id=user_id)
+    print(user)
+    return render(request,'happiness/profile1.html',{'ser':user,'co':pst})
+
+
+@login_required
+def makefulfilled(request,user_id,post_id):
+    user = User.objects.get(id=user_id)
+    pst = post.objects.get(id=post_id)
+    if user.fulfilled.filter(id=post_id).exists():
+        user.fulfilled.remove(pst)
+    else:
+        user.fulfilled.add(pst)
+    Post = post.objects.all().order_by('-datesub') 
+    use = User.objects.all()   
+    context = {'post': Post,'user1':use}
+    return render(request,'happiness/myposts.html',context=context) 
+
 
 def signup(request):
     if request.method == 'POST':
@@ -125,7 +205,7 @@ def editprofile(request):
             messages.success(request,'User details changed successfully')
             #return redirect('home')
     else :
-        form = EditProfile()
+        form = EditProfile(instance=request.user)
     return render(request,'happiness/changeuser.html',{'form':form})
 
 def assignvoluteer(request,user_id,id):
