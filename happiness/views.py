@@ -111,6 +111,47 @@ def activepost(request,p_id):
 #from django.http import JsonResponse
 
 
+@login_required
+def claimit(request,user_id,id):
+    pst = post.objects.get(id=id)
+    if pst.claims.filter(id=user_id).exists():
+        pst.claims.remove(request.user)
+    else:
+        pst.claims.add(request.user)
+    p=pst.claims.count()    
+    Post = post.objects.all().order_by('-datesub')
+    data = {'claimcount':p }
+    print(data)
+    return JsonResponse(data)
+
+@login_required
+def assistit(request,user_id,id):
+    pst = post.objects.get(id=id)
+    if pst.volunteers.filter(id=user_id).exists():
+        pst.volunteers.remove(request.user)
+    else:
+        pst.volunteers.add(request.user)
+    p=pst.volunteers.count()    
+    Post = post.objects.all().order_by('-datesub')
+    data = {'assiscount':p }
+    print(data)
+    return JsonResponse(data)
+
+
+@login_required
+def reportpost(request,user_id,id):
+    pst = post.objects.get(id=id)
+    if pst.reports.filter(id=user_id).exists():
+        pst.reports.remove(request.user)
+    else:
+        pst.reports.add(request.user)
+    p=pst.reports.count()    
+    Post = post.objects.all().order_by('-datesub')
+    data = {'repcount':p }
+    print(data)
+    return JsonResponse(data)
+
+
 def ho(request,p_id):
     pst = post.objects.get(id=p_id)
     print(pst)
@@ -156,6 +197,8 @@ def signup(request):
             raw_password = signform.cleaned_data.get('password1')
             user = authenticate(email=email,password=raw_password)
             return redirect('home')
+        else:
+            messages.success(request,"Enter valid datas")    
     else:
         signform = SignUpForm()
     return render(request,'happiness/signup.html',{'signupform':signform})            

@@ -67,6 +67,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 
+class notifications(models.Model):
+    title = models.CharField(max_length=90)
+    message = models.TextField()
+    datesub = models.DateField()
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+
 class post(models.Model):
     title = models.CharField(max_length=200,blank=False)
     message = models.TextField()
@@ -77,7 +83,11 @@ class post(models.Model):
     claims = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='getclaims',blank=True)
     reports = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='getreports',blank=True)
     volunteers = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='assignvolunteer',blank=True)
-    timelimit = models.DateTimeField()
+    timelimit = models.DateTimeField(blank=True,null=True)
+    datelim = models.DateField(default='2018-11-11')
+    timelim = models.TimeField(default='08:34:20')
+
+    
     def __str__(self):
         return self.title
 

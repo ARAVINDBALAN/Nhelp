@@ -219,6 +219,12 @@ span.input-group-addon i {
 				</div>
 			</div>
 		</div>
+		{% if messages %}
+		{% for m in messages %}
+		<script>
+		alert("{{m}}");</script>
+		{%endfor%}
+		{%endif%}
         {% if signform.errors %}
     {% for field in signform %}
         {% for error in field.errors %}

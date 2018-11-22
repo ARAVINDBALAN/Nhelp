@@ -307,9 +307,28 @@
                     <ul>
                         {% for u in p.get_claims %}
                       <li>
-                      <a href = "{% url 'makefulfilled' user_id=u.id post_id=p.id %}">{{u.email}} Make fullfilled {{u.fulfilled.count}}</a>
+                      <a href = "{% url 'makefulfilled' user_id=u.id post_id=p.id %}" id="1{{u.id}}">{{u.email}} Make fullfilled {{u.fulfilled.count}}</a>
                       </li>
-                      
+                      <script>
+                        $(".status").change(function () {
+                          var sta = $(this).val();
+                    
+                          $.ajax({
+                            url: '',
+                            data: {
+                              'status': sta
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                              if (data == true) {
+                                document.getElementById("{{p.id}}").innerHTML = "status : Active";
+        
+                              }
+                            }
+                          });
+                    
+                        });
+                      </script>            
                     
                     {% endfor %}
                     </ul>
@@ -328,7 +347,7 @@
               <ul>
                 <li class="published-date"><a href="https://www.google.com/maps/place/{{p.location.place}}/@{{p.latitude}},{{p.longitude}},14z">Location</a></li>
                 <li class="published-date">Published:{{p.datesub}}</li>
-                <li class="published-date">Limit:{{p.timelimit}}</li>
+                <li class="published-date">Limit:{{p.datelim}} {{p.timelim}}</li>
               </ul>
             </div>
           
