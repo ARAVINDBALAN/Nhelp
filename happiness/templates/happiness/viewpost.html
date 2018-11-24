@@ -266,12 +266,17 @@
             
             
             </div>
+{%if post.count != 0%}            
 {% for p in post %}
 <div class="blog-container">
   
                 <div class="blog-header">
                   <div>
+                    {% if user.pincode == null or user.address == null or user.pincode == '' or user.address == '' or user.phone == '' %}
+                      <h3>Author :<a href="{%url 'editprofile'%}">{{p.author}}</a></h3>
+                      {%else%}
                       <h3>Author :<a href="{% url 'viewprofile' user_id=p.author.id %}"> {{p.author}}</a></h3>
+                      {%endif%}
                       <span> <h3 align="right">Status : {% if p.active_post == True %}
                         Active
                         {% else %}
@@ -290,11 +295,21 @@
                   </div>
                   <div class="blog-tags">
                     <ul>
+                      
+                      {% if p.active_post == True and user != p.author %}
                       <li><a id="3{{p.id}}">Report {{p.reports.count}}</a></li>
                       <li><a id="1{{p.id}}">Claims {{p.claims.count}}</a></li>
                       {% if user.is_also_volunteer == True %}
                       <li><a id="2{{p.id}}">Assist {{p.volunteers.count}}</a></li>
                       {% endif %}
+                      {%else%}
+                      
+                      <li><a id="">Report {{p.reports.count}}</a></li>
+                      <li><a id="">Claims {{p.claims.count}}</a></li>
+                      {% if user.is_also_volunteer == True %}
+                      <li><a id="">Assist {{p.volunteers.count}}</a></li>
+                      {% endif %}
+                      {%endif%}
                     </ul>
                   </div>
                 </div>
@@ -345,6 +360,13 @@
                 </script>
               </div>
               {%endfor%}
+              {%else%}
+              <div class="blog-body">
+                  <div class="blog-title">
+                    <h1><a href="{% url 'createpost' %}">Post a post here
+                    </a></h1>
+                  </div>
+                </div>{%endif%}
               <script type="text/javascript" src="//use.typekit.net/wtt0gtr.js"></script>
               <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
              

@@ -203,6 +203,40 @@ def signup(request):
         signform = SignUpForm()
     return render(request,'happiness/signup.html',{'signupform':signform})            
 
+
+
+@login_required
+def activeordel(request,p_id):
+    pst = post.objects.get(id=p_id)
+    print(pst)
+    if pst.active_post == True :
+        pst.active_post = False
+        pst.save()
+    else :
+        pst.active_post = True
+        pst.save()    
+    data = {'status':pst.active_post}
+    print(data)        
+    return JsonResponse(data)
+
+
+@login_required
+def makefulfilledone(request,user_id,p_id):
+    user = User.objects.get(id=user_id)
+    pst = post.objects.get(id=p_id)
+    if user.fulfilled.filter(id=p_id).exists():
+        user.fulfilled.remove(pst)
+    else:
+        user.fulfilled.add(pst)
+    Post = post.objects.all().order_by('-datesub') 
+    use = User.objects.all() 
+    p =  user.fulfilled.count()
+    print(p)
+    data = {'post': p}
+    return JsonResponse(data)
+    
+
+
 @login_required
 def delete_post(request,id,user_id):
     del_ob = post.objects.get(id=id)
