@@ -265,9 +265,10 @@ def makefulfilledone(request,user_id,p_id):
 
 @login_required
 def delete_post(request,id,user_id):
-    del_ob = post.objects.get(id=id)
-    if (del_ob.author.id == user_id):
-        del_ob.delete()    
+    if post.objects.filter(id=id).exists():
+        del_ob = post.objects.get(id=id)
+        if (del_ob.author.id == user_id):
+            del_ob.delete()    
     pst = post.objects.all()
     return redirect('mypost')
 
@@ -296,14 +297,19 @@ def getreport(request,user_id,id):
     
 @login_required
 def viewpost(request):
+    r=0
     p = post.objects.all().order_by('-datesub')
     for pst in p:
         u = pst.author
-        if pst.reports.count() > 3 :
-            if banned.objects.filter(user=pst.author).exists():
-                r=0
+        p1 = post.objects.filter(author=u)
+        r=0
+        for i in p1:
+            r+=i.reports.count()
+        if r > 3:
+            if banned.objects.filter(user=u).exists():
+                r=0    
             else :
-                banned.objects.create(user=pst.author)
+                banned.objects.create(user=u)
     return render(request,'happiness/viewpost.html',{'post':p})
 
 

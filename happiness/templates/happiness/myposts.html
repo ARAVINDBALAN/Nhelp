@@ -273,7 +273,9 @@
             
             
             </div>
-
+            {%if post.count == 0%}
+           <p class="blog-container" style="align-content:center;" > Nothing to dispaly here :(</p>
+              {%endif%}
     {% for p in post %}
     <div class="blog-container">
   
