@@ -48,7 +48,11 @@
           <li class="nav-item active"><a href="{% url 'viewpost' %}" class="nav-link">Wall</a></li>
           
           <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link">Profile</a></li>
+          {% if user.pincode == null or user.address == null or user.pincode == '' or user.address == '' or user.phone == '' %}
+          <li class="nav-item"><a href="{%url 'editprofile'%}" class="nav-link">Donate</a></li>
+          {%else%}
           <li class="nav-item"><a href="{%url 'createpost'%}" class="nav-link">Donate</a></li>
+          {%endif%}
           {% else %}
           <li class="nav-item active"><a href="{% url 'login' %}" class="nav-link">Login</a></li>
           {% endif %}      
@@ -67,7 +71,7 @@
       <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
           <div class="col-md-7 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
-            <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Left of Creation is mud</h1>
+            <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">If you can't feed a hundred people then feed one - Mother Teresa </h1>
             <p class="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Created by Happiness Team</p>
             {%if user.is_authenticated %}
             
@@ -99,7 +103,11 @@
               	<h3 class="mb-4">Create a Happy Post</h3>
                 <p>Lend a helping hand .</p>
                 {% if user.is_authenticated %}
+                {% if user.pincode == null or user.address == null or user.pincode == '' or user.address == '' or user.phone == '' %}
+                <p><a href="{% url 'editprofile' %}" class="btn btn-white px-3 py-2 mt-2">Donate Now</a></p>
+                {%else%}
                 <p><a href="{% url 'createpost' %}" class="btn btn-white px-3 py-2 mt-2">Donate Now</a></p>
+                {%endif%}
                 {% else %}
                 <p><a href="{% url 'login' %}" class="btn btn-white px-3 py-2 mt-2">Login to donate</a></p>
                 {% endif %}
@@ -162,7 +170,33 @@
     	</div>
     </section>
 
-
+    <section class="ftco-section bg-light">
+        <div class="container">
+          <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 heading-section ftco-animate text-center">
+              <h2 class="mb-4">{%if notify.count == 0%} NO NOTIFICATION{%else%}NOTIFICATION{%endif%}</h2>
+            </div>
+          </div>
+          
+          <div class="row">
+              {%for n in notify %}
+            
+            <div class="col-md-4 d-flex ftco-animate">
+              <div class="blog-entry align-self-stretch">
+                <div class="text p-5 d-block">
+                  <h3 class="heading mb-4">{{n.title}}</h3>
+                  <p class="time-loc"><span class="mr-2"><i class="icon-user-o"></i>{%if user.is_authenticated%} <a href=""> {{n.author.email}}</a>
+                    {%else%}{{n.author}}{%endif%}</span> <span><i class="icon-clock-o"></i>{{n.datesub}} </span></p>
+                  <p>{{n.message}}</p>
+                  
+                </div>
+              </div>
+            </div>
+            
+            {%endfor%}
+    </div>
+    </div>
+    </section>  
         	
     
    
@@ -224,11 +258,7 @@
               <ul class="list-unstyled">
                 <li><a href="{%url 'home'%}" class="py-2 d-block">Home</a></li>
                 <li><a href="#about" class="py-2 d-block">About</a></li>
-                {% if user.is_authenticated %}
-                <li><a href="{% url 'createpost' %}" class="py-2 d-block">Donate</a></li>
-                {%else%}
-                <li><a href="{% url 'login' %}" class="py-2 d-block">Donate</a></li>
-                {%endif%}
+               
               </ul>
             </div>
           </div>
@@ -249,7 +279,7 @@
           <div class="col-md-12 text-center">
 
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i>Happiness Team</a>
+        Made with <i class="icon-heart" aria-hidden="true"></i>Happiness Team</a>
   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
           </div>
         </div>

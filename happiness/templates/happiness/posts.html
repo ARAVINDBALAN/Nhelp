@@ -35,7 +35,7 @@
           
               
               <!-- Header -->
-              <div id="header" style="background:#989898;">
+              <div id="header" style="background:black;">
                   <div id="branding">
                   
           <h1 id="site-name"><a href="/nhelp/" style="color:#ffffff;">Add Post Here !</a></h1>
@@ -78,7 +78,6 @@
 
 
 
-
 <form method="POST">
         {%csrf_token%}
         <fieldset class="module aligned ">
@@ -118,6 +117,22 @@
                             
                         </div>
                     
+                        <div class="form-row field-address">
+            
+            
+                                <div>
+                                    
+                                    
+                                        <label for="id_address">Address:</label>
+                                        
+                                            <textarea name="address" cols="40" rows="10" class="vLargeTextField" id="id_address">
+                </textarea>
+                                        
+                                    
+                                    
+                                </div>
+                            
+                        </div>       
                         <div class="form-row field-location">
                             
                             

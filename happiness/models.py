@@ -18,7 +18,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(_('active'), default=True)
     is_staff = models.BooleanField(_('staff status'),default=False)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
-    phone_no = models.CharField(max_length=20,blank=True,null=True)
+    phone_no = models.CharField(max_length=20,blank=True)
     served = models.IntegerField(default=0)
     is_also_volunteer = models.BooleanField(blank=True,null=True)
     requested = models.IntegerField(default=0)
@@ -30,7 +30,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
@@ -73,10 +72,14 @@ class notifications(models.Model):
     datesub = models.DateField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title   
+
 class post(models.Model):
     title = models.CharField(max_length=200,blank=False)
     message = models.TextField()
     location = PlacesField()
+    address = models.TextField(blank=True)
     active_post = models.BooleanField(default=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     datesub = models.DateTimeField(_('date published'),auto_now_add=True)
@@ -113,3 +116,9 @@ class contact(models.Model):
 
     def __str__(self):
         return self.email + "_ " + self.name
+
+class banned(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)        
+
+    def __str__(self):
+        return self.user.email

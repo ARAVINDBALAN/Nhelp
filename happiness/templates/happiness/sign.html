@@ -1,0 +1,26 @@
+{% load bootstrap %}
+
+<html>
+    <head>
+         
+    <style>
+    
+    
+    </style>
+    
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">
+    </head>
+    <body>
+    <form method="POST" role="form">
+        <fieldset class="module aligned">
+        {% csrf_token %}
+        {{form|bootstrap}}
+       <div class="form-group">
+           <input type="submit" class="btn btn-primary">
+       </div>
+
+    </form>
+</fieldset>
+</body>
+</html>

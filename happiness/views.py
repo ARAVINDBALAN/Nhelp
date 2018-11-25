@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .models import * 
 from django.contrib import messages
 # Create your views here.
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,redirect,get_object_or_404
 from django.urls import reverse_lazy
 from django.http import JsonResponse
@@ -13,8 +14,9 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages 
-
+import time
 def home(request):
+
     if request.method == "POST":
         form = contactform(request.POST)
         if form.is_valid():
@@ -25,8 +27,9 @@ def home(request):
     else :
         form = contactform()
     pst = post.objects.all().order_by('-datesub')
-    user = request.user   
-    return render(request,'happiness/home.html',{'post':pst,'user':user,'form':form})
+    user = request.user
+    noti = notifications.objects.all()   
+    return render(request,'happiness/home.html',{'post':pst,'user':user,'form':form,'notify':noti})
 
 @login_required
 def bevolunteer(request):
@@ -70,8 +73,26 @@ def makeassited(request,user_id,post_id):
 @login_required
 def profile(request):
     user = request.user
+    success = False
+    r=0
+    p = post.objects.filter(author=request.user)
+    for i in p:
+        r+=i.reports.count()
     pst = post.objects.filter(author=request.user).count()
-    return render(request,'happiness/profile.html',{'ser':user,'co1':pst})
+    if request.method == "POST":
+        form = notification(request.POST)
+        if form.is_valid():
+            noti =  form.save(commit=False)
+            noti.author = request.user
+            noti.datesub = timezone.now()
+            noti.save()
+            success = True
+            messages.success(request,'Your notification is received')
+            return redirect('profile')
+            #return render(request,'happiness/profile.html',{'ser':user,'co1':pst,'form':form})
+    else:
+        form = notification()
+    return render(request,'happiness/profile.html',{'ser':user,'co1':pst,'form':form,'rep':r})
 
 @login_required
 def mypost(request):
@@ -170,8 +191,11 @@ def ho(request,p_id):
 def viewprofile(request,user_id):
     user = User.objects.get(id=user_id)
     pst = post.objects.filter(author_id=user_id)
+    r = 0
+    for k in pst:
+        r+=k.reports.count()
     print(user)
-    return render(request,'happiness/profile1.html',{'ser':user,'co':pst})
+    return render(request,'happiness/profile1.html',{'ser':user,'co':pst,'rep':r})
 
 
 @login_required
@@ -196,9 +220,11 @@ def signup(request):
             email = signform.cleaned_data.get('email')
             raw_password = signform.cleaned_data.get('password1')
             user = authenticate(email=email,password=raw_password)
-            return redirect('home')
+            messages.success(request,'new user created')
         else:
-            messages.success(request,"Enter valid datas")    
+            messages.error(request,"Enter valid datas")
+
+            return redirect('signup')    
     else:
         signform = SignUpForm()
     return render(request,'happiness/signup.html',{'signupform':signform})            
@@ -217,7 +243,7 @@ def activeordel(request,p_id):
         pst.save()    
     data = {'status':pst.active_post}
     print(data)        
-    return JsonResponse(data)
+    return JsonResponse(data)            
 
 
 @login_required
@@ -240,10 +266,10 @@ def makefulfilledone(request,user_id,p_id):
 @login_required
 def delete_post(request,id,user_id):
     del_ob = post.objects.get(id=id)
-    if (del_ob.post_author.id == user_id):
+    if (del_ob.author.id == user_id):
         del_ob.delete()    
     pst = post.objects.all()
-    return render(request,'blog/index.html',{'post':pst})
+    return redirect('mypost')
 
 @login_required
 def getclaims(request,user_id,id):
@@ -271,6 +297,13 @@ def getreport(request,user_id,id):
 @login_required
 def viewpost(request):
     p = post.objects.all().order_by('-datesub')
+    for pst in p:
+        u = pst.author
+        if pst.reports.count() > 3 :
+            if banned.objects.filter(user=pst.author).exists():
+                r=0
+            else :
+                banned.objects.create(user=pst.author)
     return render(request,'happiness/viewpost.html',{'post':p})
 
 
@@ -294,3 +327,17 @@ def assignvoluteer(request,user_id,id):
     Post = post.objects.all().order_by('-datesub')    
     context = {'post': Post}
     return render(request,'happiness/viewpost.html',context=context)
+
+
+def sign(request):
+    if request.method == "POST":
+        form = SignUpForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            email = form.cleaned_data.get('email')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(email=email,password=raw_password)
+            messages.success(request,'new user created')
+    else:
+        form = SignUpForm()    
+    return  render(request,'happiness/sign.html',{'form':form})    

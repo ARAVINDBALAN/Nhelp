@@ -138,22 +138,67 @@ span.input-group-addon i {
 		<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
 
-		<title>Admin</title>
+		<title>Sign up | Happiness</title>
 	</head>
 	<body>
+		           
+			{% if form.errors %}
+			{% for field in form %}
+				{% for error in field.errors %}
+					<div class="alert alert-danger">
+						<strong>{{ error|escape }}</strong>
+					</div>
+				{% endfor %}
+			{% endfor %}
+			{% for error in form.non_field_errors %}
+				<div class="alert alert-danger">
+					<strong>{{ error|escape }}</strong>
+				</div>
+			{% endfor %}
+		{% endif %}
+
 		<div class="container">
+	
 			<div class="row main">
 				<div class="main-login main-center">
-				<h5>Sign up once and watch any of our free demos.</h5>
+				<h5>Sign up Here.</h5>
+				{%  if form.errors%}
+				ddjjdjd
+				{%endif%}			
+				{%if messages%}
+				{%for m in messages%}
+				{% if m.tags == "success"%}
+				{{m}}  <a href="{% url 'login'%}">Login here</a>
+				{%endif%}
+				{%endfor%}
+
+				{%endif%}
+			{% if signform.errors %}
+						hdhhdhdhdhhdh
+			{% for field in signform %}
+				{% for error in field.errors %}
+			
+						<strong>{{ error|escape }}</strong>
+				
+				{% endfor %}
+			{% endfor %}
+			{% for error in signform.non_field_errors %}
+				<div class="alert alert-danger">
+					<strong>{{ error|escape }}</strong>
+				</div>
+			{% endfor %}
+		{% endif %}
+
 					<form class="" method="post" action="">
+						
 						{% csrf_token %}
 						<div class="form-group">
 							<label for="name" class="cols-sm-2 control-label">First name</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="first_name" maxlength="30" required id="id_name_first_name"  placeholder="Enter your Name"/>
-                                    
+                                    <input type="text" class="form-control" name="first_name" maxlength="30" required id="id_name_first_name"  placeholder="Enter your First Name"/>
+                                    {{signform.first_name.errors}}
 								</div>
 							</div>
 						</div>
@@ -164,8 +209,8 @@ span.input-group-addon i {
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
 									<input type="email" class="form-control" name="email" required id="id_email" maxlength="254"  placeholder="Enter your Email"/>
-                                
-                                </div>
+									
+ 	                               </div>
 							</div>
 						</div>
 
@@ -185,8 +230,8 @@ span.input-group-addon i {
 							<label for="username" class="cols-sm-2 control-label">Phone </label>
 							<div class="cols-sm-10">
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-									<input type="text" name="phone_no" class="form-control" maxlength="20" id="id_phone_no">
+									<span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
+									<input type="text" name="phone_no" class="form-control" placeholder="Phone" maxlength="20" id="id_phone_no">
 								</div>
 							</div>
 						</div>
@@ -210,36 +255,34 @@ span.input-group-addon i {
                                 </div>
 							</div>
 						</div>
-
+						{% if signform.errors %}
+						{% for field in signform %}
+							{% for error in field.errors %}
+							
+									<strong>{{ error|escape }}</strong>
+			
+							{% endfor %}
+						{% endfor %}
+						{% for error in signform.non_field_errors %}
+								<strong>{{ error|escape }}</strong>
+						{% endfor %}
+					{% endif %}
 						<div class="form-group ">
 							<input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Register">
 						</div>
-						
+							
 					</form>
 				</div>
 			</div>
 		</div>
-		{% if messages %}
+		<!-- {% if messages %}
 		{% for m in messages %}
 		<script>
 		alert("{{m}}");</script>
 		{%endfor%}
-		{%endif%}
-        {% if signform.errors %}
-    {% for field in signform %}
-        {% for error in field.errors %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-        <div class="alert alert-danger">
-            <strong>{{ error|escape }}</strong>
-        </div>
-    {% endfor %}
-{% endif %}
-		 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		{%endif%} -->
+		{{signform.as_p}}
+    	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>

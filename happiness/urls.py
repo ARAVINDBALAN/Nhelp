@@ -38,5 +38,7 @@ urlpatterns = [
     path('viewprofile/<int:user_id>',viewprofile,name='viewprofile'),
     path('profile/',profile,name='profile'),
     path('editprofile/',editprofile,name='editprofile'),
+    path('delete/<int:user_id>/<int:id>',delete_post,name='delete'),
     path('assignvolunteers/<int:user_id>/<int:id>',assignvoluteer,name='assignvolunteer'),
+    path('sign/',sign,name='sign'),
 ]

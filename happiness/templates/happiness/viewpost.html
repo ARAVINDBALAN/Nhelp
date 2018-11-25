@@ -259,7 +259,7 @@
 }
 </style>
  </head>       
- <div class="submit-row sticky">
+ <div class="submit-row">
 
     <a href="{% url 'home' %}">    <input type="button" value="Home" class="default" name="home">
         </a>
@@ -293,6 +293,9 @@
                   <div class="blog-summary">
                     <p>{{p.message}}.</p>
                   </div>
+                  <div class="blog-summary">
+                    <p>{{p.address}}.</p>
+                  </div>
                   <div class="blog-tags">
                     <ul>
                       
@@ -316,7 +319,7 @@
                 
                 <div class="blog-footer">
                   <ul>
-                    <li class="published-date"><a target="_blank" href="https://www.google.com/maps/place/{{p.location.place}}/@{{p.latitude}},{{p.longitude}},20z">Location</a></li>
+                    <li class="published-date"><a target="_blank" href="https://www.google.com/maps/search/?api=1&query={{p.location.latitude}},{{p.location.longitude}}">Location</a></li>
                     <li class="published-date">Published:{{p.datesub}}</li>
                     <li class="published-date">Limit:{{p.timelim}}{{p.datelim}}</li>
                   </ul>

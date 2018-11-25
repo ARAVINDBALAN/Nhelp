@@ -314,8 +314,9 @@
                 <ul>
                   <li><a href="#{{p.id}}uu">Report {{p.reports.count}}</a></li>
                   <li><a href="#{{p.id}}uu">Claims {{p.claims.count}}</a></li>
-                  
+                 
                   <li><a href="#{{p.id}}uu">Assist {{p.volunteers.count}}</a></li>
+                  <li><a href="{% url 'delete' user_id=user.id id=p.id%}">Delete</a></li>
                 </ul>
               </div>
               <div class="blog-tags">
@@ -341,7 +342,7 @@
             
             <div class="blog-footer">
               <ul>
-                <li class="published-date"><a target="_blank" href="https://www.google.com/maps/place/{{p.location.place}}/@{{p.latitude}},{{p.longitude}},14z">Location</a></li>
+                <li class="published-date"><a target="_blank" href="https://www.google.com/maps/search/?api=1&query={{p.location.latitude}},{{p.location.longitude}},14z">Location</a></li>
                 <li class="published-date">Published:{{p.datesub}}</li>
                 <li class="published-date">Limit:{{p.datelim}} {{p.timelim}}</li>
               </ul>
